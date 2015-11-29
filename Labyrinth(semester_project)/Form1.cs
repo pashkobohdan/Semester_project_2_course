@@ -123,6 +123,18 @@ namespace Labyrinth_semester_project_
                 pictureBox1.Refresh();
             }
         }
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F5)
+                search_way();
+
+            if (e.KeyCode == Keys.Space)
+                if (list_step_by_step != null && way_from_start_to_end != null)
+                    next_step();
+
+
+            pictureBox1.Refresh();
+        }
 
 
         private void началоПутиToolStripMenuItem_Click(object sender, EventArgs e)
@@ -140,7 +152,7 @@ namespace Labyrinth_semester_project_
             pictureBox1.Refresh();
         }
         private void прочитатьСВидеофайлаToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        {   
             openFileDialog1.InitialDirectory = "D:\\Фильмы";
             openFileDialog1.Filter = "mkv files (*.mkv)|*.mkv|avi files (*.avi)|*.avi";
             openFileDialog1.FilterIndex = 1;
@@ -153,6 +165,9 @@ namespace Labyrinth_semester_project_
                 coef_center_x = 0.5;
                 coef_center_y = 0.5;
                 coef_lab = 1.0;
+
+                is_end = false;
+                is_start = false;
 
                 pictureBox1.Refresh();
             }
@@ -229,9 +244,23 @@ namespace Labyrinth_semester_project_
             if (way_from_start_to_end != null)
             {
                 list_step_by_step = new List<Point>();
+                MessageBox.Show("Построение пути по шагам запушено.\n Нажимайте на кнопку space для следующего шага", "По шагам", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             step_number = 0;
         }
+        private void оПрограммеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Программа для построения кратчайшего пути в лабиринте\n\t\t\t\t© Пашко Богдан", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        private void алгоритмФлойдаУоршеллаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://uk.wikipedia.org/wiki/%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC_%D0%A4%D0%BB%D0%BE%D0%B9%D0%B4%D0%B0_%E2%80%94_%D0%92%D0%BE%D1%80%D1%88%D0%B5%D0%BB%D0%BB%D0%B0");
+        }
+        private void выйтиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
 
         private void search_way()
         {
@@ -301,7 +330,7 @@ namespace Labyrinth_semester_project_
             {
                 list_step_by_step = null;
                 way_from_start_to_end = null;
-                MessageBox.Show("Построение пути закончено !", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Построение пути по шагам закончено !", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 step_number = 0;
             }
             else
@@ -321,18 +350,6 @@ namespace Labyrinth_semester_project_
             {
                 show_big_dot(e, labyrinth.End_dot, Color.Red);
             }
-        }
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.F5)
-                    search_way();            
-
-            if (e.KeyCode == Keys.Space)
-                if(list_step_by_step!=null && way_from_start_to_end!=null)
-                    next_step();
-
-
-            pictureBox1.Refresh();
         }
         private void show_wall(PaintEventArgs e, Point start, Point end)
         {
@@ -367,6 +384,7 @@ namespace Labyrinth_semester_project_
             e.Graphics.DrawLine(new Pen(Color.Red), new Point(width, height), new Point(0, height));
             e.Graphics.DrawLine(new Pen(Color.Red), new Point(width, height), new Point(width, 0));
         }
+
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.Clear(Color.White);
