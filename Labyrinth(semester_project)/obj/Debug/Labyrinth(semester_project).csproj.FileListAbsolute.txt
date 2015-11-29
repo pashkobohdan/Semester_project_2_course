@@ -1,0 +1,9 @@
+c:\users\bohdan\documents\visual studio 2015\Projects\Labyrinth(semester_project)\Labyrinth(semester_project)\bin\Debug\Labyrinth(semester_project).exe.config
+c:\users\bohdan\documents\visual studio 2015\Projects\Labyrinth(semester_project)\Labyrinth(semester_project)\bin\Debug\Labyrinth(semester_project).exe
+c:\users\bohdan\documents\visual studio 2015\Projects\Labyrinth(semester_project)\Labyrinth(semester_project)\bin\Debug\Labyrinth(semester_project).pdb
+c:\users\bohdan\documents\visual studio 2015\Projects\Labyrinth(semester_project)\Labyrinth(semester_project)\obj\Debug\Labyrinth(semester_project).csprojResolveAssemblyReference.cache
+c:\users\bohdan\documents\visual studio 2015\Projects\Labyrinth(semester_project)\Labyrinth(semester_project)\obj\Debug\Labyrinth_semester_project_.Form1.resources
+c:\users\bohdan\documents\visual studio 2015\Projects\Labyrinth(semester_project)\Labyrinth(semester_project)\obj\Debug\Labyrinth_semester_project_.Properties.Resources.resources
+c:\users\bohdan\documents\visual studio 2015\Projects\Labyrinth(semester_project)\Labyrinth(semester_project)\obj\Debug\Labyrinth(semester_project).csproj.GenerateResource.Cache
+c:\users\bohdan\documents\visual studio 2015\Projects\Labyrinth(semester_project)\Labyrinth(semester_project)\obj\Debug\Labyrinth(semester_project).exe
+c:\users\bohdan\documents\visual studio 2015\Projects\Labyrinth(semester_project)\Labyrinth(semester_project)\obj\Debug\Labyrinth(semester_project).pdb
