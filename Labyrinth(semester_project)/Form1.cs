@@ -153,6 +153,8 @@ namespace Labyrinth_semester_project_
         }
         private void прочитатьСВидеофайлаToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            way_from_start_to_end = null;
+            list_step_by_step = null;
             if (new count().ShowDialog() == DialogResult.No)
             {
                 openFileDialog1.InitialDirectory = "D:\\Фильмы";
@@ -222,6 +224,8 @@ namespace Labyrinth_semester_project_
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
+                way_from_start_to_end = null;
+                list_step_by_step = null;
                 XmlSerializer deserializer = new XmlSerializer(typeof(Labyrinth));
                 using (TextReader textReader = new StreamReader(openFileDialog1.FileName))
                 {
@@ -368,7 +372,7 @@ namespace Labyrinth_semester_project_
             else
             {
                 list_step_by_step.Add(way_from_start_to_end[step_number]);
-                step_number++;
+                ++step_number;
                 pictureBox1.Refresh();
             }
         }
@@ -395,11 +399,14 @@ namespace Labyrinth_semester_project_
         }
         private void show_labyrinth(PaintEventArgs e)
         {
-            if (labyrinth.Walls.Count != 0)
+            if (labyrinth != null)
             {
-                foreach (Wall arg in labyrinth.Walls)
+                if (labyrinth.Walls.Count != 0)
                 {
-                    show_wall(e, arg.Dot_1, arg.Dot_2);
+                    foreach (Wall arg in labyrinth.Walls)
+                    {
+                        show_wall(e, arg.Dot_1, arg.Dot_2);
+                    }
                 }
             }
         }
@@ -489,6 +496,9 @@ namespace Labyrinth_semester_project_
                 myStream = new StreamReader(name);
                 using (myStream)
                 {
+                    Walls = null;
+                    Walls = new List<Wall>();
+
                     Wall arg;
                     int i = 0;
                     while (i < count_walls)
