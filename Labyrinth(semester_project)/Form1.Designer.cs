@@ -35,12 +35,13 @@
             this.прочитатьСВидеофайлаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.прочитатьСФайлаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сохранитьВФайлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.сброситьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.сохранитьОтчётToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выйтиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.путьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.построитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.поШагамToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.очистиьтToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.сброситьКоординатыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.помощьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.алгоритмФлойдаУоршеллаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,6 +52,8 @@
             this.конецПутиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -64,6 +67,8 @@
             this.помощьToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.menuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.menuStrip1.Size = new System.Drawing.Size(670, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
@@ -74,44 +79,43 @@
             this.прочитатьСВидеофайлаToolStripMenuItem,
             this.прочитатьСФайлаToolStripMenuItem,
             this.сохранитьВФайлToolStripMenuItem,
-            this.сброситьToolStripMenuItem,
+            this.сохранитьОтчётToolStripMenuItem,
             this.выйтиToolStripMenuItem});
             this.лабиринтToolStripMenuItem.Name = "лабиринтToolStripMenuItem";
-            this.лабиринтToolStripMenuItem.Size = new System.Drawing.Size(73, 20);
-            this.лабиринтToolStripMenuItem.Text = "Лабиринт";
+            this.лабиринтToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.лабиринтToolStripMenuItem.Text = "Файл";
             // 
             // прочитатьСВидеофайлаToolStripMenuItem
             // 
             this.прочитатьСВидеофайлаToolStripMenuItem.Name = "прочитатьСВидеофайлаToolStripMenuItem";
-            this.прочитатьСВидеофайлаToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
-            this.прочитатьСВидеофайлаToolStripMenuItem.Text = "Прочитать с видеофайла";
+            this.прочитатьСВидеофайлаToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.прочитатьСВидеофайлаToolStripMenuItem.Text = "Открыть видеофайл";
             this.прочитатьСВидеофайлаToolStripMenuItem.Click += new System.EventHandler(this.прочитатьСВидеофайлаToolStripMenuItem_Click);
             // 
             // прочитатьСФайлаToolStripMenuItem
             // 
             this.прочитатьСФайлаToolStripMenuItem.Name = "прочитатьСФайлаToolStripMenuItem";
-            this.прочитатьСФайлаToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
-            this.прочитатьСФайлаToolStripMenuItem.Text = "Прочитать с файла";
+            this.прочитатьСФайлаToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.прочитатьСФайлаToolStripMenuItem.Text = "Открыть XML файл";
             this.прочитатьСФайлаToolStripMenuItem.Click += new System.EventHandler(this.прочитатьСФайлаToolStripMenuItem_Click);
             // 
             // сохранитьВФайлToolStripMenuItem
             // 
             this.сохранитьВФайлToolStripMenuItem.Name = "сохранитьВФайлToolStripMenuItem";
-            this.сохранитьВФайлToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
-            this.сохранитьВФайлToolStripMenuItem.Text = "Сохранить в файл";
+            this.сохранитьВФайлToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.сохранитьВФайлToolStripMenuItem.Text = "Сохранить";
             this.сохранитьВФайлToolStripMenuItem.Click += new System.EventHandler(this.сохранитьВФайлToolStripMenuItem_Click);
             // 
-            // сброситьToolStripMenuItem
+            // сохранитьОтчётToolStripMenuItem
             // 
-            this.сброситьToolStripMenuItem.Name = "сброситьToolStripMenuItem";
-            this.сброситьToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
-            this.сброситьToolStripMenuItem.Text = "Сбросить координаты";
-            this.сброситьToolStripMenuItem.Click += new System.EventHandler(this.сброситьToolStripMenuItem_Click);
+            this.сохранитьОтчётToolStripMenuItem.Name = "сохранитьОтчётToolStripMenuItem";
+            this.сохранитьОтчётToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.сохранитьОтчётToolStripMenuItem.Text = "Сохранить отчёт";
             // 
             // выйтиToolStripMenuItem
             // 
             this.выйтиToolStripMenuItem.Name = "выйтиToolStripMenuItem";
-            this.выйтиToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.выйтиToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
             this.выйтиToolStripMenuItem.Text = "Выйти";
             this.выйтиToolStripMenuItem.Click += new System.EventHandler(this.выйтиToolStripMenuItem_Click);
             // 
@@ -120,7 +124,8 @@
             this.путьToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.построитьToolStripMenuItem,
             this.поШагамToolStripMenuItem,
-            this.очистиьтToolStripMenuItem});
+            this.очистиьтToolStripMenuItem,
+            this.сброситьКоординатыToolStripMenuItem});
             this.путьToolStripMenuItem.Name = "путьToolStripMenuItem";
             this.путьToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
             this.путьToolStripMenuItem.Text = "Путь";
@@ -128,23 +133,30 @@
             // построитьToolStripMenuItem
             // 
             this.построитьToolStripMenuItem.Name = "построитьToolStripMenuItem";
-            this.построитьToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.построитьToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.построитьToolStripMenuItem.Text = "Построить";
             this.построитьToolStripMenuItem.Click += new System.EventHandler(this.построитьToolStripMenuItem_Click);
             // 
             // поШагамToolStripMenuItem
             // 
             this.поШагамToolStripMenuItem.Name = "поШагамToolStripMenuItem";
-            this.поШагамToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.поШагамToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.поШагамToolStripMenuItem.Text = "По шагам";
             this.поШагамToolStripMenuItem.Click += new System.EventHandler(this.поШагамToolStripMenuItem_Click);
             // 
             // очистиьтToolStripMenuItem
             // 
             this.очистиьтToolStripMenuItem.Name = "очистиьтToolStripMenuItem";
-            this.очистиьтToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.очистиьтToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.очистиьтToolStripMenuItem.Text = "Очистить";
             this.очистиьтToolStripMenuItem.Click += new System.EventHandler(this.очистиьтToolStripMenuItem_Click);
+            // 
+            // сброситьКоординатыToolStripMenuItem
+            // 
+            this.сброситьКоординатыToolStripMenuItem.Name = "сброситьКоординатыToolStripMenuItem";
+            this.сброситьКоординатыToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.сброситьКоординатыToolStripMenuItem.Text = "Сбросить координаты";
+            this.сброситьКоординатыToolStripMenuItem.Click += new System.EventHandler(this.сброситьКоординатыToolStripMenuItem_Click);
             // 
             // помощьToolStripMenuItem
             // 
@@ -256,13 +268,16 @@
         private System.Windows.Forms.ToolStripMenuItem путьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem построитьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem поШагамToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem сброситьToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem очистиьтToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem помощьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem алгоритмФлойдаУоршеллаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem инструкцияToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem сброситьКоординатыToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem сохранитьОтчётToolStripMenuItem;
+        private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 

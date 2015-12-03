@@ -86,17 +86,10 @@ namespace Labyrinth_semester_project_
 
                 if (moving_picture)
                 {
-                    //if ((double)(x_center + dx) / pictureBox1.Width >  -0.1
-                    //    && (double)(x_center + dx) / pictureBox1.Width < 1.1
-                    //    &&(double)(y_center + dy) / pictureBox1.Height > -0.1 
-                    //    && (double)(y_center + dy) / pictureBox1.Height < 1.1)
-                    //{
                     x_center += dx;
                     y_center += dy;
                     coef_center_x = (double)x_center / pictureBox1.Width;
                     coef_center_y = (double)y_center / pictureBox1.Height;
-                    //}
-                    pictureBox1.Refresh();
                 }
                 else
                 {
@@ -108,8 +101,9 @@ namespace Labyrinth_semester_project_
                     {
                         labyrinth.Walls[number_moving_wall].Dot_2 = real_corrdinate_dot;
                     }
-                    pictureBox1.Refresh();
                 }
+
+                pictureBox1.Refresh();
 
                 x_s = e.X;
                 y_s = e.Y;
@@ -125,15 +119,21 @@ namespace Labyrinth_semester_project_
         }
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.F5)
-                search_way();
+            switch (e.KeyCode)
+            {
+                case Keys.F5:
+                    search_way();
+                    pictureBox1.Refresh();
+                    break;
 
-            if (e.KeyCode == Keys.Space)
-                if (list_step_by_step != null && way_from_start_to_end != null)
-                    next_step();
-
-
-            pictureBox1.Refresh();
+                case Keys.Space:
+                    if (list_step_by_step != null && way_from_start_to_end != null)
+                    {
+                        next_step();
+                    }
+                    pictureBox1.Refresh();
+                    break;
+            }
         }
 
 
@@ -152,43 +152,54 @@ namespace Labyrinth_semester_project_
             pictureBox1.Refresh();
         }
         private void прочитатьСВидеофайлаToolStripMenuItem_Click(object sender, EventArgs e)
-        {   
-            openFileDialog1.InitialDirectory = "D:\\Фильмы";
-            openFileDialog1.Filter = "mkv files (*.mkv)|*.mkv|avi files (*.avi)|*.avi";
-            openFileDialog1.FilterIndex = 1;
-            openFileDialog1.RestoreDirectory = true;
-
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+        {
+            if (new count().ShowDialog() == DialogResult.No)
             {
-                labyrinth.read_from_file(openFileDialog1.FileName, 50);
+                openFileDialog1.InitialDirectory = "D:\\Фильмы";
+                openFileDialog1.Filter = "mkv files (*.mkv)|*.mkv|avi files (*.avi)|*.avi";
+                openFileDialog1.FilterIndex = 1;
+                openFileDialog1.RestoreDirectory = true;
 
-                coef_center_x = 0.5;
-                coef_center_y = 0.5;
-                coef_lab = 1.0;
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    labyrinth.read_from_file(openFileDialog1.FileName, 20);
 
-                is_end = false;
-                is_start = false;
+                    coef_center_x = 0.5;
+                    coef_center_y = 0.5;
+                    coef_lab = 1.0;
 
-                pictureBox1.Refresh();
+                    is_end = false;
+                    is_start = false;
+
+                    pictureBox1.Refresh();
+                }
+            }
+            else
+            {
+                openFileDialog1.InitialDirectory = "D:\\Фильмы";
+                openFileDialog1.Filter = "mkv files (*.mkv)|*.mkv|avi files (*.avi)|*.avi";
+                openFileDialog1.FilterIndex = 1;
+                openFileDialog1.RestoreDirectory = true;
+
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    labyrinth.read_from_file(openFileDialog1.FileName, 50);
+
+                    coef_center_x = 0.5;
+                    coef_center_y = 0.5;
+                    coef_lab = 1.0;
+
+                    is_end = false;
+                    is_start = false;
+
+                    pictureBox1.Refresh();
+                }
             }
         }
         private void построитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            list_step_by_step = null;
             search_way();
-            pictureBox1.Refresh();
-        }
-        private void сброситьToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            height = pictureBox1.Height - 1;
-            width = pictureBox1.Width - 1;
-            x_center = pictureBox1.Width / 2;
-            y_center = pictureBox1.Height / 2;
-            coef_center_x = x_center / pictureBox1.Width;
-            coef_center_y = y_center / pictureBox1.Height;
-            coef_center_x = 0.5;
-            coef_center_y = 0.5;
-            coef_lab = 1.0;
-
             pictureBox1.Refresh();
         }
         private void сохранитьВФайлToolStripMenuItem_Click(object sender, EventArgs e)
@@ -254,42 +265,63 @@ namespace Labyrinth_semester_project_
         }
         private void алгоритмФлойдаУоршеллаToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://uk.wikipedia.org/wiki/%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC_%D0%A4%D0%BB%D0%BE%D0%B9%D0%B4%D0%B0_%E2%80%94_%D0%92%D0%BE%D1%80%D1%88%D0%B5%D0%BB%D0%BB%D0%B0");
+            System.Diagnostics.Process.Start(Path.GetDirectoryName(Application.ExecutablePath) + "/Resources/Floyd_alg.html");
         }
         private void выйтиToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
+        }
+        private void сброситьКоординатыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            height = pictureBox1.Height - 1;
+            width = pictureBox1.Width - 1;
+            x_center = pictureBox1.Width / 2;
+            y_center = pictureBox1.Height / 2;
+            coef_center_x = x_center / pictureBox1.Width;
+            coef_center_y = y_center / pictureBox1.Height;
+            coef_center_x = 0.5;
+            coef_center_y = 0.5;
+            coef_lab = 1.0;
+
+            pictureBox1.Refresh();
         }
 
 
         private void search_way()
         {
             way_from_start_to_end = null;
-            if (!is_start || !is_end)
+            if (labyrinth.Walls.Count == 0)
             {
-                MessageBox.Show("Выберите начальную и конечную точку !", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Сначала откройте файл !", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-                graph = new Graph(labyrinth.Walls, labyrinth.Start_dot, labyrinth.End_dot);
-                graph.Floyd_algorithm();
-                if (graph.matrix_graph[0, graph.Points.Count - 1] != 1000000000.0)
+                if (!is_start || !is_end)
                 {
-                    way_from_start_to_end = new List<Point>();
-                    way_from_start_to_end.Add(labyrinth.Start_dot);
-
-                    way_from_start_to_end.Add(graph.Points[graph.ways[0, graph.Points.Count - 1][0]]);
-
-                    for (int i = 1; i < graph.ways[0, graph.Points.Count - 1].Count; i++)
-                    {
-                        way_from_start_to_end.Add(graph.Points[graph.ways[0, graph.Points.Count - 1][i]]);
-                    }
-
-                    way_from_start_to_end.Add(graph.Points[graph.Points.Count - 1]);
+                    MessageBox.Show("Выберите начальную и конечную точку !", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
-                    MessageBox.Show("Пути от заданной начальной точки до конечной не существует !", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    graph = new Graph(labyrinth.Walls, labyrinth.Start_dot, labyrinth.End_dot);
+                    graph.Floyd_algorithm();
+                    if (graph.matrix_graph[0, graph.Points.Count - 1] != 1000000000.0)
+                    {
+                        way_from_start_to_end = new List<Point>();
+                        way_from_start_to_end.Add(labyrinth.Start_dot);
+
+                        way_from_start_to_end.Add(graph.Points[graph.Ways[0, graph.Points.Count - 1][0]]);
+
+                        for (int i = 1; i < graph.Ways[0, graph.Points.Count - 1].Count; i++)
+                        {
+                            way_from_start_to_end.Add(graph.Points[graph.Ways[0, graph.Points.Count - 1][i]]);
+                        }
+
+                        way_from_start_to_end.Add(graph.Points[graph.Points.Count - 1]);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Пути от заданной начальной точки до конечной не существует !", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
@@ -384,6 +416,18 @@ namespace Labyrinth_semester_project_
             e.Graphics.DrawLine(new Pen(Color.Red), new Point(width, height), new Point(0, height));
             e.Graphics.DrawLine(new Pen(Color.Red), new Point(width, height), new Point(width, 0));
         }
+        private void show_ways_list(List<Point> ways_points, PaintEventArgs e)
+        {
+            Point start = ways_points[0];
+            Point end;
+
+            for (int i = 1; i < ways_points.Count; ++i)
+            {
+                end = ways_points[i];
+                show_wall(e, new Pen(Color.Blue), start, end);
+                start = end;
+            }
+        }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
@@ -393,39 +437,22 @@ namespace Labyrinth_semester_project_
             {
                 show_labyrinth(e);
             }
-            show_start_end_dots(e);
 
+            show_start_end_dots(e);
 
             if (list_step_by_step != null)
             {
-                Point start = list_step_by_step[0];
-                Point end;
-
-                for (int i = 1; i < list_step_by_step.Count; ++i)
-                {
-                    end = list_step_by_step[i];
-                    show_wall(e, new Pen(Color.Red), start, end);
-                    start = end;
-                }
+                show_ways_list(list_step_by_step,e);
             }
             else
             {
                 if (way_from_start_to_end != null)
                 {
-                    Point start = way_from_start_to_end[0];
-                    Point end;
-
-                    for (int i = 1; i < way_from_start_to_end.Count; ++i)
-                    {
-                        end = way_from_start_to_end[i];
-                        show_wall(e, new Pen(Color.Red), start, end);
-                        start = end;
-                    }
+                    show_ways_list(way_from_start_to_end, e);
                 }
             }
 
         }
-
     }
     
     public class Wall
@@ -439,9 +466,7 @@ namespace Labyrinth_semester_project_
             Dot_2 = dot_2;
         }
         public Wall()
-        {
-
-        }
+        {}
     }
     public class Labyrinth
     {
@@ -488,11 +513,12 @@ namespace Labyrinth_semester_project_
     {
         public List<Wall> Walls { set; get; }
         private Point start, end;
+
         public List<Point> Points { set; get; }
         public double[,] matrix_graph;
         private double inf = 1000000000.0;
 
-        public List<int>[,] ways;
+        public List<int>[,] Ways { set; get; }
 
         public Graph(List<Wall> walls, Point start, Point end)
         {
@@ -512,23 +538,18 @@ namespace Labyrinth_semester_project_
             }
             Points.Add(end);
 
-
             matrix_graph = new double[Points.Count, Points.Count];
 
-
-            ways = new List<int>[Points.Count, Points.Count];
+            Ways = new List<int>[Points.Count, Points.Count];
             for (int i = 0; i < Points.Count; i++)
             {
                 for (int j = 0; j < Points.Count; j++)
                 {
-                    ways[i, j] = new List<int>();
+                    Ways[i, j] = new List<int>();
                 }
             }
             
-
             fill_mass();
-            
-            //Floyd_algorithm();
         }
         public Graph() { }
 
@@ -539,16 +560,15 @@ namespace Labyrinth_semester_project_
                 for (int i = 0; i < Points.Count - 1; i++)
                 {
                     matrix_graph[i, i] = 0;
-                    //ways[i, i].Add(i);
                     for (int j = i + 1; j < Points.Count; j++)
                     {
-                        if (i < Points.Count && j < Points.Count && aviable_from_1_to_2(Points[i], Points[j]))//&& aviable_from_1_to_2(Points[i], Points[j])
+                        if (i < Points.Count && j < Points.Count && aviable_from_1_to_2(Points[i], Points[j]))
                         {
                             matrix_graph[i, j] = distance_from_1_to_2(Points[i], Points[j]);
                             matrix_graph[j, i] = distance_from_1_to_2(Points[i], Points[j]);
                             
-                            ways[i, j].Add(j);
-                            ways[j, i].Add(i);
+                            Ways[i, j].Add(j);
+                            Ways[j, i].Add(i);
                         }
                         else
                         {
@@ -558,27 +578,14 @@ namespace Labyrinth_semester_project_
                     }
                 }
                 matrix_graph[Points.Count - 1, Points.Count - 1] = 0;
-                //ways[Points.Count - 1, Points.Count - 1].Add(Points.Count - 1);
             }
         }
-
-        public override string ToString()
-        {
-            string result = "";
-            foreach (Wall arg in Walls)
-            {
-                result += arg.Dot_1.X + "\n";
-            }
-            return result;
-        }
-
         private double distance_from_1_to_2(Point point_1, Point point_2)
         {
             return Math.Sqrt((double)(point_1.X - point_2.X) * (point_1.X - point_2.X) + (double)(point_1.Y - point_2.Y) * (point_1.Y - point_2.Y));
         }
-        public bool aviable_from_1_to_2(Point point_1, Point point_2)
+        private bool aviable_from_1_to_2(Point point_1, Point point_2)
         {
-
             if (point_1 != point_2)
             {
                 foreach (Wall arg in Walls)
@@ -594,7 +601,6 @@ namespace Labyrinth_semester_project_
             }
             return true;
         }
-
         private int multiplication_vectors(Point point_1, Point point_2)
         {
             return point_1.X * point_2.Y - point_2.X * point_1.Y;
@@ -603,7 +609,7 @@ namespace Labyrinth_semester_project_
         {
             return multiplication_vectors(new Point(point_1.X - point_2.X, point_1.Y - point_2.Y), new Point(point_3.X - point_4.X, point_3.Y - point_4.Y));
         }
-        public bool collision(Wall wall_1, Wall wall_2)
+        private bool collision(Wall wall_1, Wall wall_2)
         {
             if (
                 (Math.Max(wall_1.Dot_1.X, wall_1.Dot_2.X) >= Math.Min(wall_2.Dot_1.X, wall_2.Dot_2.X))
@@ -625,18 +631,6 @@ namespace Labyrinth_semester_project_
             }
             return false;
         }
-
-        public string floay_to_string()
-        {
-            string result = matrix_graph[0, Points.Count - 1]+"...";
-
-            foreach (int arg in ways[0, Points.Count - 1])
-            {
-                result += arg + " ";
-            }
-            // result = matrix_graph[0, Points.Count - 1] + "    ";
-            return result;
-        }
         public void Floyd_algorithm()
         {
             for (int k = 0; k < Points.Count; k++)
@@ -645,23 +639,18 @@ namespace Labyrinth_semester_project_
                 {
                     for (int j = 0; j < Points.Count; j++)
                     {
-                        if (i!=j && matrix_graph[i, j] > matrix_graph[i, k] + matrix_graph[k, j])
+                        if (i != j && matrix_graph[i, k] + matrix_graph[k, j] < matrix_graph[i, j])
                         {
                             matrix_graph[i, j] = matrix_graph[i, k] + matrix_graph[k, j];
-                            //matrix_graph[j, i] = matrix_graph[i, k] + matrix_graph[k, j];
 
-                            ways[i, j] = new List<int>();
-                            ways[i, j].AddRange(ways[i, k]);
-                            ways[i, j].AddRange(ways[k, j]);
-
-                            //ways[j, i].AddRange(ways[i, k]);
-                            //ways[j, i].AddRange(ways[k, j]);
-
+                            Ways[i, j] = new List<int>();
+                            Ways[i, j].AddRange(Ways[i, k]);
+                            Ways[i, j].AddRange(Ways[k, j]);
                         }
-                        //matrix_graph[i,j] = Math.Min(matrix_graph[i, j], matrix_graph[i, k] + matrix_graph[k, j]);
                     }
                 }
             }
         }
     }
+
 }
