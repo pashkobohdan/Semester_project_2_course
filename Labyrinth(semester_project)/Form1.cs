@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
@@ -36,6 +38,7 @@ namespace Labyrinth_semester_project_
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             height = pictureBox1.Height - 1;
             width = pictureBox1.Width - 1;
             x_center = pictureBox1.Width / 2;
@@ -289,8 +292,65 @@ namespace Labyrinth_semester_project_
 
             pictureBox1.Refresh();
         }
+        private void сохранитьОтчётToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (labyrinth.Walls.Count != 0 && way_from_start_to_end != null)
+            {
+                StreamReader read = new StreamReader("Resources/reports/count_reports.txt");
+                int count_reports = int.Parse(read.ReadLine());
+                ++count_reports;
+                read.Close();
+
+                StreamWriter file = new StreamWriter("Resources/reports/count_reports.txt");
+                file.WriteLine(count_reports);
+                file.Close();
 
 
+                file = new StreamWriter("Resources/reports/report_" + count_reports + ".html", false, Encoding.UTF8);
+                file.WriteLine(GetMyTable(count_reports));
+
+                file.Close();
+
+                Bitmap res = new Bitmap(Width, Height);
+                DrawToBitmap(res, new Rectangle(Point.Empty, Size));
+
+                res.Save("Resources/reports/picture" + count_reports + ".bmp");
+            }
+            else
+            {
+                MessageBox.Show("Чтобы сохранить отчёт постройте путь !", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            write_report();
+        }
+
+        private void write_report()
+        {
+            if (labyrinth.Walls.Count != 0 && way_from_start_to_end != null)
+            {
+                StreamReader read = new StreamReader("Resources/reports/count_reports.txt");
+                int count_reports = int.Parse(read.ReadLine());
+                ++count_reports;
+                read.Close();
+
+                StreamWriter file = new StreamWriter("Resources/reports/count_reports.txt");
+                file.WriteLine(count_reports);
+                file.Close();
+
+
+                file = new StreamWriter("Resources/reports/report_" + count_reports + ".html", false, Encoding.UTF8);
+                file.WriteLine(GetMyTable(count_reports));
+
+                file.Close();
+
+                Bitmap res = new Bitmap(Width, Height);
+                DrawToBitmap(res, new Rectangle(Point.Empty, Size));
+
+                res.Save("Resources/reports/picture" + count_reports + ".bmp");
+            }
+        }
         private void search_way()
         {
             way_from_start_to_end = null;
@@ -392,6 +452,53 @@ namespace Labyrinth_semester_project_
             e.Graphics.DrawLine(new Pen(Color.Black), new Point((int)((start.X - 128) * coef_lab + x_center), (int)((start.Y - 128) * coef_lab + y_center)), new Point((int)((end.X - 128) * coef_lab + x_center), (int)((end.Y - 128) * coef_lab + y_center)));
             show_big_dot(e, start, Color.Black);
             show_big_dot(e, end, Color.Black);
+        }
+        public  string GetMyTable(int number)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<!DOCTYPE HTML PUBLIC \" -//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\"><html> <head><meta http-equiv=\"Content - Type\" content=\"text / html; charset = windows - 1251\" /><style> h1{text-align:center;}table {border: 2px solid #ccc;margin: 0 auto;}th, td {border: 1px solid black;text - align: center;padding: 1em;}# left, #right {position: fixed;top: 5em;}# left {left: 5em;   }# center { margin: 0 auto;}# right {right: 5em;}# green {background: #81FF7A;}# red {background: #FF5252;}</style></head><body>");
+            sb.Append("\n<h1>Результат построения пути :</h1>");
+            sb.Append("\n<h1>Снимок экрана :</h1>");
+
+            sb.Append("<center><img src=\"picture" + number + ".bmp\" alt=\"picture\"></center>");
+
+            sb.Append("<TABLE>\n");
+
+            sb.Append("<TR>\n");
+
+            sb.Append("<TD>");
+            sb.Append("Все точки");
+            sb.Append("</TD>");
+
+            sb.Append("<TD>");
+            sb.Append("Точки, входящие в путь");
+            sb.Append("</TD>");
+
+            sb.Append("</TR>\n");
+
+            for(int j=0;j<graph.Points.Count;++j)
+            { 
+                sb.Append("<TR>\n");
+                
+                sb.Append("<TD>");
+                sb.Append(graph.Points[j].X+" , "+ graph.Points[j].Y);
+                sb.Append("</TD>");
+
+                if (j < way_from_start_to_end.Count)
+                {
+                    sb.Append("<TD>");
+                    sb.Append(way_from_start_to_end[j].X + " , " + way_from_start_to_end[j].Y);
+                    sb.Append("</TD>");
+                }
+
+                sb.Append("</TR>\n");
+
+            }
+
+            sb.Append("</TABLE>");
+            sb.Append("</body>/n</ html > ");
+
+            return sb.ToString();
         }
         private void show_wall(PaintEventArgs e,Pen pen, Point start, Point end)
         {

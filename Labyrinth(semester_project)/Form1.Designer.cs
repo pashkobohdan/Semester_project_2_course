@@ -111,6 +111,7 @@
             this.сохранитьОтчётToolStripMenuItem.Name = "сохранитьОтчётToolStripMenuItem";
             this.сохранитьОтчётToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
             this.сохранитьОтчётToolStripMenuItem.Text = "Сохранить отчёт";
+            this.сохранитьОтчётToolStripMenuItem.Click += new System.EventHandler(this.сохранитьОтчётToolStripMenuItem_Click);
             // 
             // выйтиToolStripMenuItem
             // 
@@ -241,6 +242,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Лабиринт";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.menuStrip1.ResumeLayout(false);
