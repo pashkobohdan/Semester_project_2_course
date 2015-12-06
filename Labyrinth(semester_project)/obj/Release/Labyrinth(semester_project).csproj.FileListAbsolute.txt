@@ -1,10 +1,10 @@
-C:\Users\Bohdan\documents\visual studio 2015\Projects\Labyrinth(semester_project)\Labyrinth(semester_project)\bin\Release\Labyrinth(semester_project).exe.config
-C:\Users\Bohdan\documents\visual studio 2015\Projects\Labyrinth(semester_project)\Labyrinth(semester_project)\bin\Release\Labyrinth(semester_project).exe
-C:\Users\Bohdan\documents\visual studio 2015\Projects\Labyrinth(semester_project)\Labyrinth(semester_project)\bin\Release\Labyrinth(semester_project).pdb
 C:\Users\Bohdan\documents\visual studio 2015\Projects\Labyrinth(semester_project)\Labyrinth(semester_project)\obj\Release\Labyrinth(semester_project).csprojResolveAssemblyReference.cache
 C:\Users\Bohdan\documents\visual studio 2015\Projects\Labyrinth(semester_project)\Labyrinth(semester_project)\obj\Release\Labyrinth_semester_project_.Form1.resources
 C:\Users\Bohdan\documents\visual studio 2015\Projects\Labyrinth(semester_project)\Labyrinth(semester_project)\obj\Release\Labyrinth_semester_project_.Properties.Resources.resources
 C:\Users\Bohdan\documents\visual studio 2015\Projects\Labyrinth(semester_project)\Labyrinth(semester_project)\obj\Release\Labyrinth(semester_project).csproj.GenerateResource.Cache
-C:\Users\Bohdan\documents\visual studio 2015\Projects\Labyrinth(semester_project)\Labyrinth(semester_project)\obj\Release\Labyrinth(semester_project).exe
-C:\Users\Bohdan\documents\visual studio 2015\Projects\Labyrinth(semester_project)\Labyrinth(semester_project)\obj\Release\Labyrinth(semester_project).pdb
 C:\Users\Bohdan\documents\visual studio 2015\Projects\Labyrinth(semester_project)\Labyrinth(semester_project)\obj\Release\Labyrinth_semester_project_.count.resources
+C:\Users\Bohdan\Documents\Visual Studio 2015\Projects\Labyrinth(semester_project)\Labyrinth(semester_project)\bin\Release\Лабиринт.exe.config
+C:\Users\Bohdan\Documents\Visual Studio 2015\Projects\Labyrinth(semester_project)\Labyrinth(semester_project)\bin\Release\Лабиринт.exe
+C:\Users\Bohdan\Documents\Visual Studio 2015\Projects\Labyrinth(semester_project)\Labyrinth(semester_project)\bin\Release\Лабиринт.pdb
+C:\Users\Bohdan\Documents\Visual Studio 2015\Projects\Labyrinth(semester_project)\Labyrinth(semester_project)\obj\Release\Лабиринт.exe
+C:\Users\Bohdan\Documents\Visual Studio 2015\Projects\Labyrinth(semester_project)\Labyrinth(semester_project)\obj\Release\Лабиринт.pdb

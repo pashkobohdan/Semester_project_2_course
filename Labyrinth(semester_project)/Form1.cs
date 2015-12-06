@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -38,7 +38,6 @@ namespace Labyrinth_semester_project_
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             height = pictureBox1.Height - 1;
             width = pictureBox1.Width - 1;
             x_center = pictureBox1.Width / 2;
@@ -307,7 +306,7 @@ namespace Labyrinth_semester_project_
 
 
                 file = new StreamWriter("Resources/reports/report_" + count_reports + ".html", false, Encoding.UTF8);
-                file.WriteLine(GetMyTable(count_reports));
+                file.WriteLine(getReport(count_reports));
 
                 file.Close();
 
@@ -325,6 +324,12 @@ namespace Labyrinth_semester_project_
         {
             write_report();
         }
+        private void инструкцияToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process p = new Process();
+            p.StartInfo.FileName = "manual.pdf";
+            p.Start();
+        }
 
         private void write_report()
         {
@@ -341,7 +346,7 @@ namespace Labyrinth_semester_project_
 
 
                 file = new StreamWriter("Resources/reports/report_" + count_reports + ".html", false, Encoding.UTF8);
-                file.WriteLine(GetMyTable(count_reports));
+                file.WriteLine(getReport(count_reports));
 
                 file.Close();
 
@@ -368,7 +373,7 @@ namespace Labyrinth_semester_project_
                 {
                     graph = new Graph(labyrinth.Walls, labyrinth.Start_dot, labyrinth.End_dot);
                     graph.Floyd_algorithm();
-                    if (graph.matrix_graph[0, graph.Points.Count - 1] != 1000000000.0)
+                    if (graph.Matrix_graph[0, graph.Points.Count - 1] != 1000000000.0)
                     {
                         way_from_start_to_end = new List<Point>();
                         way_from_start_to_end.Add(labyrinth.Start_dot);
@@ -453,7 +458,7 @@ namespace Labyrinth_semester_project_
             show_big_dot(e, start, Color.Black);
             show_big_dot(e, end, Color.Black);
         }
-        public  string GetMyTable(int number)
+        private string getReport(int number)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("<!DOCTYPE HTML PUBLIC \" -//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\"><html> <head><meta http-equiv=\"Content - Type\" content=\"text / html; charset = windows - 1251\" /><style> h1{text-align:center;}table {border: 2px solid #ccc;margin: 0 auto;}th, td {border: 1px solid black;text - align: center;padding: 1em;}# left, #right {position: fixed;top: 5em;}# left {left: 5em;   }# center { margin: 0 auto;}# right {right: 5em;}# green {background: #81FF7A;}# red {background: #FF5252;}</style></head><body>");
@@ -632,7 +637,7 @@ namespace Labyrinth_semester_project_
         private Point start, end;
 
         public List<Point> Points { set; get; }
-        public double[,] matrix_graph;
+        public double[,] Matrix_graph { set; get; }
         private double inf = 1000000000.0;
 
         public List<int>[,] Ways { set; get; }
@@ -655,7 +660,7 @@ namespace Labyrinth_semester_project_
             }
             Points.Add(end);
 
-            matrix_graph = new double[Points.Count, Points.Count];
+            Matrix_graph = new double[Points.Count, Points.Count];
 
             Ways = new List<int>[Points.Count, Points.Count];
             for (int i = 0; i < Points.Count; i++)
@@ -676,25 +681,25 @@ namespace Labyrinth_semester_project_
             {
                 for (int i = 0; i < Points.Count - 1; i++)
                 {
-                    matrix_graph[i, i] = 0;
+                    Matrix_graph[i, i] = 0;
                     for (int j = i + 1; j < Points.Count; j++)
                     {
                         if (i < Points.Count && j < Points.Count && aviable_from_1_to_2(Points[i], Points[j]))
                         {
-                            matrix_graph[i, j] = distance_from_1_to_2(Points[i], Points[j]);
-                            matrix_graph[j, i] = distance_from_1_to_2(Points[i], Points[j]);
+                            Matrix_graph[i, j] = distance_from_1_to_2(Points[i], Points[j]);
+                            Matrix_graph[j, i] = distance_from_1_to_2(Points[i], Points[j]);
                             
                             Ways[i, j].Add(j);
                             Ways[j, i].Add(i);
                         }
                         else
                         {
-                            matrix_graph[j, i] = inf;
-                            matrix_graph[i, j] = inf;
+                            Matrix_graph[j, i] = inf;
+                            Matrix_graph[i, j] = inf;
                         }
                     }
                 }
-                matrix_graph[Points.Count - 1, Points.Count - 1] = 0;
+                Matrix_graph[Points.Count - 1, Points.Count - 1] = 0;
             }
         }
         private double distance_from_1_to_2(Point point_1, Point point_2)
@@ -726,7 +731,7 @@ namespace Labyrinth_semester_project_
         {
             return multiplication_vectors(new Point(point_1.X - point_2.X, point_1.Y - point_2.Y), new Point(point_3.X - point_4.X, point_3.Y - point_4.Y));
         }
-        private bool collision(Wall wall_1, Wall wall_2)
+        public bool collision(Wall wall_1, Wall wall_2)
         {
             if (
                 (Math.Max(wall_1.Dot_1.X, wall_1.Dot_2.X) >= Math.Min(wall_2.Dot_1.X, wall_2.Dot_2.X))
@@ -756,9 +761,9 @@ namespace Labyrinth_semester_project_
                 {
                     for (int j = 0; j < Points.Count; j++)
                     {
-                        if (i != j && matrix_graph[i, k] + matrix_graph[k, j] < matrix_graph[i, j])
+                        if (i != j && Matrix_graph[i, k] + Matrix_graph[k, j] < Matrix_graph[i, j])
                         {
-                            matrix_graph[i, j] = matrix_graph[i, k] + matrix_graph[k, j];
+                            Matrix_graph[i, j] = Matrix_graph[i, k] + Matrix_graph[k, j];
 
                             Ways[i, j] = new List<int>();
                             Ways[i, j].AddRange(Ways[i, k]);
