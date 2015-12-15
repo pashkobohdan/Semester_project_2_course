@@ -52,8 +52,6 @@
             this.конецПутиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -279,8 +277,6 @@
         private System.Windows.Forms.ToolStripMenuItem инструкцияToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem сброситьКоординатыToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem сохранитьОтчётToolStripMenuItem;
-        private System.Windows.Forms.ColorDialog colorDialog1;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 

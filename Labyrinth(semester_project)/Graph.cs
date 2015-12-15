@@ -15,6 +15,7 @@ namespace Labyrinth_semester_project_
 
         public List<int>[,] Ways { set; get; }
 
+
         public Graph(List<Wall> walls, Point start, Point end)
         {
             this.start = start;
@@ -47,7 +48,6 @@ namespace Labyrinth_semester_project_
             fill_mass();
         }
         public Graph() { }
-
         private void fill_mass()
         {
             if (Points != null && Points.Count != 0)
@@ -104,7 +104,7 @@ namespace Labyrinth_semester_project_
         {
             return multiplication_vectors(new Point(point_1.X - point_2.X, point_1.Y - point_2.Y), new Point(point_3.X - point_4.X, point_3.Y - point_4.Y));
         }
-        public bool collision(Wall wall_1, Wall wall_2)
+        private bool collision(Wall wall_1, Wall wall_2)
         {
             if (
                 (Math.Max(wall_1.Dot_1.X, wall_1.Dot_2.X) >= Math.Min(wall_2.Dot_1.X, wall_2.Dot_2.X))
@@ -145,15 +145,6 @@ namespace Labyrinth_semester_project_
                     }
                 }
             }
-        }
-
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }
