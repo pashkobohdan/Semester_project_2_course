@@ -6,6 +6,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using static System.Windows.Forms.MessageBox;
 
 namespace Labyrinth_semester_project_
 {
@@ -129,7 +130,7 @@ namespace Labyrinth_semester_project_
                     break;
 
                 case Keys.Space:
-                    if (list_step_by_step != null && way_from_start_to_end != null)
+                    if (list_step_by_step != null && way_from_start_to_end != null && way_from_start_to_end.Count!=0)
                     {
                         next_step();
                     }
@@ -260,8 +261,13 @@ namespace Labyrinth_semester_project_
 
             if (way_from_start_to_end != null)
             {
-                list_step_by_step = new List<Point>();
-                MessageBox.Show("Построение пути по шагам запушено.\n Нажимайте на кнопку space для следующего шага", "По шагам", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (way_from_start_to_end.Count != 0)
+                {
+                    list_step_by_step = new List<Point>();
+                    MessageBox.Show(
+                        "Построение пути по шагам запушено.\n Нажимайте на кнопку space для следующего шага", "По шагам",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
             step_number = 0;
         }
@@ -291,6 +297,7 @@ namespace Labyrinth_semester_project_
 
             pictureBox1.Refresh();
         }
+
         private void сохранитьОтчётToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (labyrinth.Walls.Count != 0 && way_from_start_to_end != null)
@@ -317,7 +324,7 @@ namespace Labyrinth_semester_project_
             }
             else
             {
-                MessageBox.Show("Чтобы сохранить отчёт постройте путь !", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Чтобы сохранить отчёт постройте путь !", "Ошибка", MessageBoxButtons.OK,MessageBoxIcon.Error);
             }
         }
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)

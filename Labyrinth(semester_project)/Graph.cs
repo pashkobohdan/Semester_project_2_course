@@ -11,7 +11,7 @@ namespace Labyrinth_semester_project_
 
         public List<Point> Points { set; get; }
         public double[,] Matrix_graph { set; get; }
-        private double inf = 1000000000.0;
+        private const double inf = 1000000000.0;
 
         public List<int>[,] Ways { set; get; }
 
