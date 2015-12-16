@@ -6,7 +6,6 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using static System.Windows.Forms.MessageBox;
 
 namespace Labyrinth_semester_project_
 {
@@ -19,11 +18,11 @@ namespace Labyrinth_semester_project_
         private Labyrinth labyrinth = new Labyrinth();
         private Graph graph = new Graph();
 
-        private bool is_start = false, is_end = false;
+        private bool is_start, is_end;
 
         private int x_s, y_s;
 
-        private bool moving_picture = false;
+        private bool moving_picture;
         private int number_moving_wall = -1;
         private int first_second_dot_in_wall = -1;
 
@@ -52,7 +51,6 @@ namespace Labyrinth_semester_project_
             pictureBox1.ContextMenuStrip = contextMenuStrip1;
             pictureBox1.MouseWheel += new MouseEventHandler(pictureBox1_MouseWheel);
         }
-
         public Form1()
         {
             InitializeComponent();
@@ -137,6 +135,10 @@ namespace Labyrinth_semester_project_
                     pictureBox1.Refresh();
                     break;
             }
+        }
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            write_report();
         }
 
 
@@ -250,6 +252,7 @@ namespace Labyrinth_semester_project_
         private void очистиьтToolStripMenuItem_Click(object sender, EventArgs e)
         {
             way_from_start_to_end = null;
+            list_step_by_step = null;
             pictureBox1.Refresh();
         }
         private void поШагамToolStripMenuItem_Click(object sender, EventArgs e)
@@ -297,7 +300,6 @@ namespace Labyrinth_semester_project_
 
             pictureBox1.Refresh();
         }
-
         private void сохранитьОтчётToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (labyrinth.Walls.Count != 0 && way_from_start_to_end != null)
@@ -327,16 +329,37 @@ namespace Labyrinth_semester_project_
                 MessageBox.Show("Чтобы сохранить отчёт постройте путь !", "Ошибка", MessageBoxButtons.OK,MessageBoxIcon.Error);
             }
         }
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            write_report();
-        }
         private void инструкцияToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Process p = new Process();
             p.StartInfo.FileName = "manual.pdf";
             p.Start();
         }
+        private void очиститьВсёToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            labyrinth = new Labyrinth();
+            graph = new Graph();
+            is_start = false;
+            is_end = false;
+            moving_picture = false;
+            number_moving_wall = -1;
+            first_second_dot_in_wall = -1;
+            way_from_start_to_end = null;
+            list_step_by_step = null;
+
+            height = pictureBox1.Height - 1;
+            width = pictureBox1.Width - 1;
+            x_center = pictureBox1.Width / 2;
+            y_center = pictureBox1.Height / 2;
+            coef_center_x = x_center / pictureBox1.Width;
+            coef_center_y = y_center / pictureBox1.Height;
+            coef_center_x = 0.5;
+            coef_center_y = 0.5;
+            coef_lab = 1.0;
+
+            pictureBox1.Refresh();
+        }
+
 
         private void write_report()
         {
@@ -512,6 +535,8 @@ namespace Labyrinth_semester_project_
 
             return sb.ToString();
         }
+        
+
         private void show_wall(PaintEventArgs e,Pen pen, Point start, Point end)
         {
             e.Graphics.DrawLine(pen, new Point((int)((start.X - 128) * coef_lab + x_center), (int)((start.Y - 128) * coef_lab + y_center)), new Point((int)((end.X - 128) * coef_lab + x_center), (int)((end.Y - 128) * coef_lab + y_center)));
@@ -554,6 +579,7 @@ namespace Labyrinth_semester_project_
                 start = end;
             }
         }
+
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {

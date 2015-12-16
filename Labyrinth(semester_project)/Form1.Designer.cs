@@ -52,6 +52,7 @@
             this.конецПутиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.очиститьВсёToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -124,7 +125,8 @@
             this.построитьToolStripMenuItem,
             this.поШагамToolStripMenuItem,
             this.очистиьтToolStripMenuItem,
-            this.сброситьКоординатыToolStripMenuItem});
+            this.сброситьКоординатыToolStripMenuItem,
+            this.очиститьВсёToolStripMenuItem});
             this.путьToolStripMenuItem.Name = "путьToolStripMenuItem";
             this.путьToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
             this.путьToolStripMenuItem.Text = "Путь";
@@ -132,28 +134,28 @@
             // построитьToolStripMenuItem
             // 
             this.построитьToolStripMenuItem.Name = "построитьToolStripMenuItem";
-            this.построитьToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.построитьToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
             this.построитьToolStripMenuItem.Text = "Построить";
             this.построитьToolStripMenuItem.Click += new System.EventHandler(this.построитьToolStripMenuItem_Click);
             // 
             // поШагамToolStripMenuItem
             // 
             this.поШагамToolStripMenuItem.Name = "поШагамToolStripMenuItem";
-            this.поШагамToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.поШагамToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
             this.поШагамToolStripMenuItem.Text = "По шагам";
             this.поШагамToolStripMenuItem.Click += new System.EventHandler(this.поШагамToolStripMenuItem_Click);
             // 
             // очистиьтToolStripMenuItem
             // 
             this.очистиьтToolStripMenuItem.Name = "очистиьтToolStripMenuItem";
-            this.очистиьтToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
-            this.очистиьтToolStripMenuItem.Text = "Очистить";
+            this.очистиьтToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.очистиьтToolStripMenuItem.Text = "Очистить путь";
             this.очистиьтToolStripMenuItem.Click += new System.EventHandler(this.очистиьтToolStripMenuItem_Click);
             // 
             // сброситьКоординатыToolStripMenuItem
             // 
             this.сброситьКоординатыToolStripMenuItem.Name = "сброситьКоординатыToolStripMenuItem";
-            this.сброситьКоординатыToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.сброситьКоординатыToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
             this.сброситьКоординатыToolStripMenuItem.Text = "Сбросить координаты";
             this.сброситьКоординатыToolStripMenuItem.Click += new System.EventHandler(this.сброситьКоординатыToolStripMenuItem_Click);
             // 
@@ -230,6 +232,13 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // очиститьВсёToolStripMenuItem
+            // 
+            this.очиститьВсёToolStripMenuItem.Name = "очиститьВсёToolStripMenuItem";
+            this.очиститьВсёToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.очиститьВсёToolStripMenuItem.Text = "Очистить область рисования";
+            this.очиститьВсёToolStripMenuItem.Click += new System.EventHandler(this.очиститьВсёToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -277,6 +286,7 @@
         private System.Windows.Forms.ToolStripMenuItem инструкцияToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem сброситьКоординатыToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem сохранитьОтчётToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem очиститьВсёToolStripMenuItem;
     }
 }
 
