@@ -7,7 +7,6 @@ namespace Labyrinth_semester_project_
     public class Graph
     {
         public List<Wall> Walls { set; get; }
-        private Point start, end;
 
         public List<Point> Points { set; get; }
         public double[,] Matrix_graph { set; get; }
@@ -18,32 +17,28 @@ namespace Labyrinth_semester_project_
 
         public Graph(List<Wall> walls, Point start, Point end)
         {
-            this.start = start;
-            this.end = end;
             Walls = new List<Wall>();
             Walls = walls;
 
             Points = new List<Point>();
-
-
             Points.Add(start);
-            for (int i = 0; i < Walls.Count; ++i)
+            foreach (Wall arg in Walls)
             {
-                Points.Add(Walls[i].Dot_1);
-                Points.Add(Walls[i].Dot_2);
+                Points.Add(arg.Dot_1);
+                Points.Add(arg.Dot_2);
             }
             Points.Add(end);
 
             Matrix_graph = new double[Points.Count, Points.Count];
 
             Ways = new List<int>[Points.Count, Points.Count];
-            for (int i = 0; i < Points.Count; i++)
-            {
-                for (int j = 0; j < Points.Count; j++)
-                {
-                    Ways[i, j] = new List<int>();
-                }
-            }
+            //for (int i = 0; i < Points.Count; i++)
+            //{
+            //    for (int j = 0; j < Points.Count; j++)
+            //    {
+            //        Ways[i, j] = new List<int>();
+            //    }
+            //}
 
             fill_mass();
         }
@@ -55,8 +50,11 @@ namespace Labyrinth_semester_project_
                 for (int i = 0; i < Points.Count - 1; i++)
                 {
                     Matrix_graph[i, i] = 0;
+                    Ways[i, i] = new List<int>();
                     for (int j = i + 1; j < Points.Count; j++)
                     {
+                        Ways[i, j] = new List<int>();
+                        Ways[j, i] = new List<int>();
                         if (i < Points.Count && j < Points.Count && aviable_from_1_to_2(Points[i], Points[j]))
                         {
                             Matrix_graph[i, j] = distance_from_1_to_2(Points[i], Points[j]);
@@ -128,13 +126,13 @@ namespace Labyrinth_semester_project_
         }
         public void Floyd_algorithm()
         {
-            for (int k = 0; k < Points.Count; k++)
+            for (int k = 1; k < Points.Count-1; k++)
             {
                 for (int i = 0; i < Points.Count; i++)
                 {
                     for (int j = 0; j < Points.Count; j++)
                     {
-                        if (i != j && Matrix_graph[i, k] + Matrix_graph[k, j] < Matrix_graph[i, j])
+                        if (i != j && (Matrix_graph[i, k] + Matrix_graph[k, j] < Matrix_graph[i, j]))
                         {
                             Matrix_graph[i, j] = Matrix_graph[i, k] + Matrix_graph[k, j];
 

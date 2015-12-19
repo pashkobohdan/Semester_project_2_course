@@ -36,6 +36,16 @@ namespace Labyrinth_semester_project_
         private List<Point> list_step_by_step;
         private int step_number;
 
+        private XmlSerializer deserializer;
+        private TextReader textReader;
+        private XmlSerializer serializer;
+        private TextWriter textWriter;
+
+        private StreamReader srReader;
+        private StreamWriter srWriter;
+
+
+
         private void Form1_Load(object sender, EventArgs e)
         {
             height = pictureBox1.Height - 1;
@@ -160,48 +170,32 @@ namespace Labyrinth_semester_project_
         {
             way_from_start_to_end = null;
             list_step_by_step = null;
+            openFileDialog1.InitialDirectory = "D:\\Фильмы";
+            openFileDialog1.Filter = "mkv files (*.mkv)|*.mkv|avi files (*.avi)|*.avi";
+            openFileDialog1.FilterIndex = 1;
+            openFileDialog1.RestoreDirectory = true;
+            
+            int count = 0;
             if (new count().ShowDialog() == DialogResult.No)
             {
-                openFileDialog1.InitialDirectory = "D:\\Фильмы";
-                openFileDialog1.Filter = "mkv files (*.mkv)|*.mkv|avi files (*.avi)|*.avi";
-                openFileDialog1.FilterIndex = 1;
-                openFileDialog1.RestoreDirectory = true;
-
-                if (openFileDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    labyrinth.read_from_file(openFileDialog1.FileName, 20);
-
-                    coef_center_x = 0.5;
-                    coef_center_y = 0.5;
-                    coef_lab = 1.0;
-
-                    is_end = false;
-                    is_start = false;
-
-                    pictureBox1.Refresh();
-                }
+                count = 20;
             }
             else
             {
-                openFileDialog1.InitialDirectory = "D:\\Фильмы";
-                openFileDialog1.Filter = "mkv files (*.mkv)|*.mkv|avi files (*.avi)|*.avi";
-                openFileDialog1.FilterIndex = 1;
-                openFileDialog1.RestoreDirectory = true;
-
-                if (openFileDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    labyrinth.read_from_file(openFileDialog1.FileName, 50);
-
-                    coef_center_x = 0.5;
-                    coef_center_y = 0.5;
-                    coef_lab = 1.0;
-
-                    is_end = false;
-                    is_start = false;
-
-                    pictureBox1.Refresh();
-                }
+                count = 50;
             }
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                labyrinth.read_from_file(openFileDialog1.FileName, count);
+                coef_center_x = 0.5;
+                coef_center_y = 0.5;
+                coef_lab = 1.0;
+                is_end = false;
+                is_start = false;
+            }
+
+            pictureBox1.Refresh();
         }
         private void построитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -215,8 +209,8 @@ namespace Labyrinth_semester_project_
             saveFileDialog1.RestoreDirectory = true;
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(Labyrinth));
-                using (TextWriter textWriter = new StreamWriter(saveFileDialog1.FileName))
+                serializer = new XmlSerializer(typeof(Labyrinth));
+                using (textWriter = new StreamWriter(saveFileDialog1.FileName))
                 {
                     serializer.Serialize(textWriter, labyrinth);
                 }
@@ -231,8 +225,8 @@ namespace Labyrinth_semester_project_
             {
                 way_from_start_to_end = null;
                 list_step_by_step = null;
-                XmlSerializer deserializer = new XmlSerializer(typeof(Labyrinth));
-                using (TextReader textReader = new StreamReader(openFileDialog1.FileName))
+                deserializer = new XmlSerializer(typeof(Labyrinth));
+                using (textReader = new StreamReader(openFileDialog1.FileName))
                 {
                     labyrinth = (Labyrinth)deserializer.Deserialize(textReader);
                 }
@@ -267,8 +261,8 @@ namespace Labyrinth_semester_project_
                 if (way_from_start_to_end.Count != 0)
                 {
                     list_step_by_step = new List<Point>();
-                    MessageBox.Show(
-                        "Построение пути по шагам запушено.\n Нажимайте на кнопку space для следующего шага", "По шагам",
+                    MessageBox.Show("Построение пути по шагам запушено.\n Нажимайте на кнопку space для следующего шага", 
+                        "По шагам",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
@@ -276,7 +270,10 @@ namespace Labyrinth_semester_project_
         }
         private void оПрограммеToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Программа для построения кратчайшего пути в лабиринте\n\t\t\t\t© Пашко Богдан", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("\tПрограмма для построения кратчайшего пути в лабиринте\n\n" +
+                "\tВ программе используется алгоритм Флойда-Уоршелла для построения пути в двумерном лабиринте\n\n"+
+                "\tАлгоритм Флойда — Уоршелла — динамический алгоритм для нахождения кратчайших расстояний между всеми вершинами взвешенного ориентированного графа.\nРазработан в 1962 году Робертом Флойдом и Стивеном Уоршеллом, хотя в 1959 году Бернард Рой опубликовал практически такой же алгоритм." +           
+                "\n\n\t\t\t\t© Пашко Богдан", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void алгоритмФлойдаУоршеллаToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -284,6 +281,7 @@ namespace Labyrinth_semester_project_
         }
         private void выйтиToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            write_report();
             Close();
         }
         private void сброситьКоординатыToolStripMenuItem_Click(object sender, EventArgs e)
@@ -302,29 +300,7 @@ namespace Labyrinth_semester_project_
         }
         private void сохранитьОтчётToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (labyrinth.Walls.Count != 0 && way_from_start_to_end != null)
-            {
-                StreamReader read = new StreamReader("Resources/reports/count_reports.txt");
-                int count_reports = int.Parse(read.ReadLine());
-                ++count_reports;
-                read.Close();
-
-                StreamWriter file = new StreamWriter("Resources/reports/count_reports.txt");
-                file.WriteLine(count_reports);
-                file.Close();
-
-
-                file = new StreamWriter("Resources/reports/report_" + count_reports + ".html", false, Encoding.UTF8);
-                file.WriteLine(getReport(count_reports));
-
-                file.Close();
-
-                Bitmap res = new Bitmap(Width, Height);
-                DrawToBitmap(res, new Rectangle(Point.Empty, Size));
-
-                res.Save("Resources/reports/picture" + count_reports + ".bmp");
-            }
-            else
+            if (!write_report())
             {
                 MessageBox.Show("Чтобы сохранить отчёт постройте путь !", "Ошибка", MessageBoxButtons.OK,MessageBoxIcon.Error);
             }
@@ -361,30 +337,39 @@ namespace Labyrinth_semester_project_
         }
 
 
-        private void write_report()
+        private bool write_report()
         {
             if (labyrinth.Walls.Count != 0 && way_from_start_to_end != null)
             {
-                StreamReader read = new StreamReader("Resources/reports/count_reports.txt");
-                int count_reports = int.Parse(read.ReadLine());
-                ++count_reports;
-                read.Close();
+                try
+                {
+                    srReader = new StreamReader("Resources/reports/count_reports.txt");
+                    int count_reports = int.Parse(srReader.ReadLine());
+                    ++count_reports;
+                    srReader.Close();
 
-                StreamWriter file = new StreamWriter("Resources/reports/count_reports.txt");
-                file.WriteLine(count_reports);
-                file.Close();
+                    srWriter = new StreamWriter("Resources/reports/count_reports.txt");
+                    srWriter.WriteLine(count_reports);
+                    srWriter.Close();
 
 
-                file = new StreamWriter("Resources/reports/report_" + count_reports + ".html", false, Encoding.UTF8);
-                file.WriteLine(getReport(count_reports));
+                    srWriter = new StreamWriter("Resources/reports/report_" + count_reports + ".html", false, Encoding.UTF8);
+                    srWriter.WriteLine(getReport(count_reports));
+                    srWriter.Close();
 
-                file.Close();
+                    Bitmap res = new Bitmap(Width, Height);
+                    DrawToBitmap(res, new Rectangle(Point.Empty, Size));
 
-                Bitmap res = new Bitmap(Width, Height);
-                DrawToBitmap(res, new Rectangle(Point.Empty, Size));
+                    res.Save("Resources/reports/picture" + count_reports + ".bmp");
 
-                res.Save("Resources/reports/picture" + count_reports + ".bmp");
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
             }
+            return false;
         }
         private void search_way()
         {
@@ -407,7 +392,6 @@ namespace Labyrinth_semester_project_
                     {
                         way_from_start_to_end = new List<Point>();
                         way_from_start_to_end.Add(labyrinth.Start_dot);
-
                         way_from_start_to_end.Add(graph.Points[graph.Ways[0, graph.Points.Count - 1][0]]);
 
                         for (int i = 1; i < graph.Ways[0, graph.Points.Count - 1].Count; i++)
@@ -484,7 +468,7 @@ namespace Labyrinth_semester_project_
         }
         private void show_wall(PaintEventArgs e, Point start, Point end)
         {
-            e.Graphics.DrawLine(new Pen(Color.Black), new Point((int)((start.X - 128) * coef_lab + x_center), (int)((start.Y - 128) * coef_lab + y_center)), new Point((int)((end.X - 128) * coef_lab + x_center), (int)((end.Y - 128) * coef_lab + y_center)));
+            e.Graphics.DrawLine(new Pen(Color.Black), new Point((int)((start.X - 128.0) * coef_lab + x_center), (int)((start.Y - 128.0) * coef_lab + y_center)), new Point((int)((end.X - 128.0) * coef_lab + x_center), (int)((end.Y - 128.0) * coef_lab + y_center)));
             show_big_dot(e, start, Color.Black);
             show_big_dot(e, end, Color.Black);
         }
@@ -492,13 +476,12 @@ namespace Labyrinth_semester_project_
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("<!DOCTYPE HTML PUBLIC \" -//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\"><html> <head><meta http-equiv=\"Content - Type\" content=\"text / html; charset = windows - 1251\" /><style> h1{text-align:center;}table {border: 2px solid #ccc;margin: 0 auto;}th, td {border: 1px solid black;text - align: center;padding: 1em;}# left, #right {position: fixed;top: 5em;}# left {left: 5em;   }# center { margin: 0 auto;}# right {right: 5em;}# green {background: #81FF7A;}# red {background: #FF5252;}</style></head><body>");
+
             sb.Append("\n<h1>Результат построения пути :</h1>");
             sb.Append("\n<h1>Снимок экрана :</h1>");
-
             sb.Append("<center><img src=\"picture" + number + ".bmp\" alt=\"picture\"></center>");
-
+    
             sb.Append("<TABLE>\n");
-
             sb.Append("<TR>\n");
 
             sb.Append("<TD>");
@@ -514,7 +497,6 @@ namespace Labyrinth_semester_project_
             for(int j=0;j<graph.Points.Count;++j)
             { 
                 sb.Append("<TR>\n");
-                
                 sb.Append("<TD>");
                 sb.Append(graph.Points[j].X+" , "+ graph.Points[j].Y);
                 sb.Append("</TD>");
@@ -539,7 +521,7 @@ namespace Labyrinth_semester_project_
 
         private void show_wall(PaintEventArgs e,Pen pen, Point start, Point end)
         {
-            e.Graphics.DrawLine(pen, new Point((int)((start.X - 128) * coef_lab + x_center), (int)((start.Y - 128) * coef_lab + y_center)), new Point((int)((end.X - 128) * coef_lab + x_center), (int)((end.Y - 128) * coef_lab + y_center)));
+            e.Graphics.DrawLine(pen, new Point((int)((start.X - 128.0) * coef_lab + x_center), (int)((start.Y - 128.0) * coef_lab + y_center)), new Point((int)((end.X - 128.0) * coef_lab + x_center), (int)((end.Y - 128.0) * coef_lab + y_center)));
         }
         private void show_labyrinth(PaintEventArgs e)
         {
@@ -605,5 +587,6 @@ namespace Labyrinth_semester_project_
             }
 
         }
+
     }
 }
